@@ -5,8 +5,8 @@ import mysql.connector
 import pika
 import schedule
 import time
-from ho.Product import Product
-from ho.db import DBService
+from ho_.Product import Product
+from ho_.DBService import DBService
 
 
 def getAllProducts():
@@ -48,7 +48,6 @@ mydb = mysql.connector.connect(
     port= "3306",
 )
 mycursor = mydb.cursor()
-db= DBService("bo2")
 
 
 
@@ -58,6 +57,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='bo2')
 
+db= DBService("bo2")
 
 
 #polling function
@@ -73,6 +73,7 @@ def polling_func():
         p.set_up_to_date('ok')
         mycursor.execute(f"UPDATE product SET up_to_date ='ok'  where id= { p.get_id()}" )
         mydb.commit()
+    db.conn.close()
 
 
 def poll():
@@ -85,5 +86,5 @@ def poll():
 
 poll_thread = threading.Thread(target=poll)
 poll_thread.start()
-db.RenderTable("bo1")
+db.RenderTable("bo2")
 

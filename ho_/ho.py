@@ -1,15 +1,12 @@
 import json
 import threading
 import pika
-
-
-from db import DBService
-from Product import Product;
-
+from Product import Product
+from DBService import DBService
 
 # QUEUE_NAME = "bo"
 
-db_service = DBService("localhost", "root" , "root", "ho",3306)
+db_service = DBService("ho")
 def main():
     # UI
 

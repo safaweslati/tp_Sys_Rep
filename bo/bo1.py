@@ -7,8 +7,8 @@ import schedule
 import time
 
 
-from ho.Product import Product
-from ho.db import DBService
+from ho_.Product import Product
+from ho_.DBService import DBService
 
 
 def getAllProducts(mycursor):
@@ -50,8 +50,6 @@ channel.queue_declare(queue='bo1')
 
 #polling function
 def polling_func():
-    db=DBService("bo1")
-
     print("polling function running...")
     mycursor=db.cursor
     ps=get_products_to_send(db.cursor)
@@ -63,6 +61,7 @@ def polling_func():
         p.set_up_to_date('ok')
         mycursor.execute(f"UPDATE product SET up_to_date ='ok'  where id= '{ p.get_id()}' " )
         db.conn.commit()
+    db.conn.close()
 
 
 

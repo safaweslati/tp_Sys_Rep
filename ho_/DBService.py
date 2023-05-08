@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkcalendar import DateEntry
 
-from ho.Product import Product
+from ho_.Product import Product
 
 
 
@@ -76,7 +76,7 @@ class DBService:
         self.cursor.execute(select_all_query)
         rows = self.cursor.fetchall()
         for row in rows:
-            id, region, product, total, date, bo, up_to_date = row
+            id, region, product, total, date, up_to_date, bo = row
             p = Product(id, region, product, total, date, up_to_date, bo)
             products.append(p)
 
@@ -135,8 +135,12 @@ class DBService:
         table.heading("total", text="Total")
         table.heading("date", text="Date")
         table.heading("BO", text="BO")
+        # products = self.getAllProducts()
+        # for product in products:
+        #     table.insert("", tk.END, text="",
+        #                  values=(product.id,product.region, product.product, product.total, product.date, product.bo))
 
-        if "ho" in type:
+        if "ho_" in type:
             my_w.title('Head Office')
         elif "bo" in type:
             my_w.title("Branch Office " + type[-1])
